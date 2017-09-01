@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Web-based E-bingo cards</title>
+	
+    <script src="js/jquery-3.2.1.min.js"></script>
+    
+    <script>
+		jQuery(document).ready(function(){
+		
+        	$('#new-bingo-card').click(function(){
+            	$($('div.bingo-card > table')).clone().appendTo('.your-bingo-cards');
+			});
+			
+		
+			$('.your-bingo-cards').on('click','button',function(){
+				$(this).closest('table').remove();
+			});
+			
+			$('button#bingo-tally-table').click(function() {
+				if($('div#bingo-tally > table').css('display')==='none')
+					$('div#bingo-tally > table').css('display','block');
+				else
+					$('div#bingo-tally > table').css('display','none');
+			});		
+			
+			var checkcardsforvalues = function() {
+				str = new Array();
+				//totalcards = $('.your-bingo-cards > table').length;
+				totalnumbers = $('.your-bingo-cards > table tr td input[type="number"]').length;
+				i = 0;
+				$.each($('.your-bingo-cards > table tr td input[type="number"]'),function() {
+					if($(this).val()!='') {
+						str[i] = $(this).val();
+						i++;
+					}
+				});
+				
+				if(i < totalnumbers) {
+					alert('Please input all the numbers of your bingo cards.');
+					return false;
+				}else {
+					return true;
+				}
+			}
+				
+			
+			var changecolor = function(number,rgbvalue){
+				
+				$.each($('.your-bingo-cards > table tr td input[type="number"]'),function(){
+
+					if($(this).val()==numbercalled){
+						$(this).css('background-color',rgbvalue);
+					}
+				});
+			}
+			
+			
+			$('.tally-card-item').click(function(){
+					
+				numbercalled = $(this).text();
+				if($('.your-bingo-cards > table').length==0) {
+					alert("you don't have any bingo cards yet. please click the new bingo card button.");
+					return false;
+				}
+				
+				if (checkcardsforvalues()== false)
+					return false;
+				
+				//alert($(this).css('background-color'));
+				if($(this).css('background-color')!='rgb(13, 246, 130)') {
+					$(this).css('background-color','rgb(13, 246, 130)');
+					changecolor(numbercalled,'rgb(13, 246, 130)');
+				}else {	
+					$(this).css('background-color','rgb(223, 227, 225)');
+					changecolor(numbercalled,'rgb(223, 227, 225)');
+				}
+			});
+		});
+	
+	</script>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+		div {
+			padding:15px 5px;
+		}
+		.bingo-card {
+			display:none;
+		}
+		
+		.table {
+			border:solid 1px #000;
+			width:500px;
+			float:left;
+		}
+		
+		.table  th, tr {
+			text-align:center;
+			font-size:14px;
+			font-style:bold;
+			padding:25px;
+		}
+		
+		.table tr > td > input.card-item {
+			background-color:#FFF;
+			border:solid 1px rgb(223, 227, 225);
+			background-color:rgb(223, 227, 225);
+			width:40px;
+			min-height:25px;
+		}
+		
+		button.tally-card-item {
+			background-color: rgb(223, 227, 225);
+		}
+		
+		input[type="text"]:focus{
+			outline: none;
+			box-shadow: 0px 0px 5px #61C5FA;
+			border:1px solid #5AB0DB;
+		}
+
+		input[type="text"]:hover{
+			border: 1px solid #5AB0DB;
+			border-radius: 5px;
+		}
+
+		input[type="text"]:focus:hover{
+			outline: none;
+			box-shadow: 0px 0px 5px #61C5FA;
+			border:1px solid #5AB0DB;
+			border-radius:0;
+		}    
+		
+		div#bingo-tally > table tr td{
+			border: solid 1px #000;
+		}
+		
+		button.tally-card-item {
+			margin:5px;
+			padding:10px;
+			width:40px;
+		}	
+		
+		
+	</style>
+  </head>
+
+  <body>
+    <div class="container"> <!-- container -->
+	    <h2>Web-based E-bingo Cards</h2>
+		<div class="btn-group">
+        	<button id='new-bingo-card' class='btn btn-secondary'>New Bingo Card</button>
+			<button id='bingo-tally-table' class='btn btn-secondary'>Bingo Tally Table</button>
+			<button id='bingo-pattern' class='btn btn-secondary'>Pattern</button>
+        </div>
+		<div id="bingo-tally">
+		<table>
+			<tr>
+				<td><h3>B</h3></td>
+				<td><button class='tally-card-item'>1</button></td>
+				<td><button class='tally-card-item'>2</button></td>
+				<td><button class='tally-card-item'>3</button></td>
+				<td><button class='tally-card-item'>4</button></td>
+				<td><button class='tally-card-item'>5</button></td>
+				
+				<td><button class='tally-card-item'>6</button></td>
+				<td><button class='tally-card-item'>7</button></td>
+				<td><button class='tally-card-item'>8</button></td>
+				<td><button class='tally-card-item'>9</button></td>
+				<td><button class='tally-card-item'>10</button></td>
+				
+				<td><button class='tally-card-item'>11</button></td>
+				<td><button class='tally-card-item'>12</button></td>
+				<td><button class='tally-card-item'>13</button></td>
+				<td><button class='tally-card-item'>14</button></td>
+				<td><button class='tally-card-item'>15</button></td>
+			</tr>
+			<tr>
+				<td><h3>I</h3></td>
+				<td><button class='tally-card-item'>16</button></td>
+				<td><button class='tally-card-item'>17</button></td>
+				<td><button class='tally-card-item'>18</button></td>
+				<td><button class='tally-card-item'>19</button></td>
+				<td><button class='tally-card-item'>20</button></td>
+				
+				<td><button class='tally-card-item'>21</button></td>
+				<td><button class='tally-card-item'>22</button></td>
+				<td><button class='tally-card-item'>23</button></td>
+				<td><button class='tally-card-item'>24</button></td>
+				<td><button class='tally-card-item'>25</button></td>
+				
+				<td><button class='tally-card-item'>26</button></td>
+				<td><button class='tally-card-item'>27</button></td>
+				<td><button class='tally-card-item'>28</button></td>
+				<td><button class='tally-card-item'>29</button></td>
+				<td><button class='tally-card-item'>30</button></td>
+			</tr>
+			
+			<tr>
+				<td><h3>N</h3></td>
+				<td><button class='tally-card-item'>31</button></td>
+				<td><button class='tally-card-item'>32</button></td>
+				<td><button class='tally-card-item'>33</button></td>
+				<td><button class='tally-card-item'>34</button></td>
+				<td><button class='tally-card-item'>35</button></td>
+				
+				<td><button class='tally-card-item'>36</button></td>
+				<td><button class='tally-card-item'>37</button></td>
+				<td><button class='tally-card-item'>38</button></td>
+				<td><button class='tally-card-item'>39</button></td>
+				<td><button class='tally-card-item'>40</button></td>
+				
+				<td><button class='tally-card-item'>41</button></td>
+				<td><button class='tally-card-item'>42</button></td>
+				<td><button class='tally-card-item'>43</button></td>
+				<td><button class='tally-card-item'>44</button></td>
+				<td><button class='tally-card-item'>45</button></td>
+			</tr>
+			
+			<tr>
+				<td><h3>G</h3></td>
+				<td><button class='tally-card-item'>46</button></td>
+				<td><button class='tally-card-item'>47</button></td>
+				<td><button class='tally-card-item'>48</button></td>
+				<td><button class='tally-card-item'>49</button></td>
+				<td><button class='tally-card-item'>50</button></td>
+				
+				<td><button class='tally-card-item'>51</button></td>
+				<td><button class='tally-card-item'>52</button></td>
+				<td><button class='tally-card-item'>53</button></td>
+				<td><button class='tally-card-item'>54</button></td>
+				<td><button class='tally-card-item'>55</button></td>
+				
+				<td><button class='tally-card-item'>56</button></td>
+				<td><button class='tally-card-item'>57</button></td>
+				<td><button class='tally-card-item'>58</button></td>
+				<td><button class='tally-card-item'>59</button></td>
+				<td><button class='tally-card-item'>60</button></td>
+			</tr>
+			
+			<tr>
+				<td><h3>O</h3></td>
+				<td><button class='tally-card-item'>61</button></td>
+				<td><button class='tally-card-item'>62</button></td>
+				<td><button class='tally-card-item'>63</button></td>
+				<td><button class='tally-card-item'>64</button></td>
+				<td><button class='tally-card-item'>65</button></td>
+				
+				<td><button class='tally-card-item'>66</button></td>
+				<td><button class='tally-card-item'>67</button></td>
+				<td><button class='tally-card-item'>68</button></td>
+				<td><button class='tally-card-item'>69</button></td>
+				<td><button class='tally-card-item'>70</button></td>
+				
+				<td><button class='tally-card-item'>71</button></td>
+				<td><button class='tally-card-item'>72</button></td>
+				<td><button class='tally-card-item'>73</button></td>
+				<td><button class='tally-card-item'>74</button></td>
+				<td><button class='tally-card-item'>75</button></td>
+			</tr>
+		</table>	
+			
+			
+		</div>
+        <div class="your-bingo-cards">
+        
+        
+        </div>
+    	<div class="row">
+        	
+            <div class="bingo-card">
+            	<table class="table">
+                	<thead>
+                    	<th>B</th>
+                        <th>I</th>
+                        <th>N</th>
+                        <th>G</th>
+                        <th>O</th>
+                    </thead>    
+                    <tr>
+                    	<td><input type="number" class="card-item" min="1" max="15" value=""></td>
+                    	<td><input type="number" class="card-item" min="16" max="30" value=""></td>
+                    	<td><input type="number" class="card-item" min="31" max="45" value=""></td>
+                    	<td><input type="number" class="card-item" min="46" max="60" value=""></td>
+                    	<td><input type="number" class="card-item" min="61" max="75" value=""></td>         
+                    </tr>    
+					
+                    <tr>
+                    	<td><input type="number" class="card-item" min="1" max="15" value=""></td>
+                    	<td><input type="number" class="card-item" min="16" max="30" value=""></td>
+                    	<td><input type="number" class="card-item" min="31" max="45" value=""></td>
+                    	<td><input type="number" class="card-item" min="46" max="60" value=""></td>
+                    	<td><input type="number" class="card-item" min="61" max="75" value=""></td>         
+                    </tr>    
+					
+                    <tr>
+                    	<td><input type="number" class="card-item" min="1" max="15" value=""></td>
+                    	<td><input type="number" class="card-item" min="16" max="30" value=""></td>
+                    	<td><span>FREE</span></td>
+                    	<td><input type="number" class="card-item" min="46" max="60" value=""></td>
+                    	<td><input type="number" class="card-item" min="61" max="75" value=""></td>         
+                    </tr>    
+					
+                    <tr>
+                    	<td><input type="number" class="card-item" min="1" max="15" value=""></td>
+                    	<td><input type="number" class="card-item" min="16" max="30" value=""></td>
+                    	<td><input type="number" class="card-item" min="31" max="45" value=""></td>
+                    	<td><input type="number" class="card-item" min="46" max="60" value=""></td>
+                    	<td><input type="number" class="card-item" min="61" max="75" value=""></td>         
+                    </tr>    
+					
+                    <tr>
+                    	<td><input type="number" class="card-item" min="1" max="15" value=""></td>
+                    	<td><input type="number" class="card-item" min="16" max="30" value=""></td>
+                    	<td><input type="number" class="card-item" min="31" max="45" value=""></td>
+                    	<td><input type="number" class="card-item" min="46" max="60" value=""></td>
+                    	<td><input type="number" class="card-item" min="61" max="75" value=""></td>         
+                    </tr>    
+					<tr>
+						<td colspan=5><button class="delete_table" >Delete</button></td>
+					</tr>
+				</table>        
+            </div>
+    	</div>
+    
+    </div> <!-- /container -->
+    
+  </body>
+</html>
