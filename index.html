@@ -9,14 +9,19 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     
     <script>
+	
+	     
 		jQuery(document).ready(function(){
-		
+			
         	$('#new-bingo-card').click(function(){
             	$($('div.bingo-card > table')).clone().appendTo('.your-bingo-cards');
+				$('#lock-cards').css('display','block');
 			});
 			
-		
+			// deletes the bingo card 
 			$('.your-bingo-cards').on('click','button',function(){
+				if($('.your-bingo-cards > table').length<1) 
+					$('#lock-cards').css('display','none');
 				$(this).closest('table').remove();
 			});
 			
@@ -46,7 +51,6 @@
 					return true;
 				}
 			}
-				
 			
 			var changecolor = function(number,rgbvalue){
 				
@@ -78,6 +82,43 @@
 					$(this).css('background-color','rgb(223, 227, 225)');
 					changecolor(numbercalled,'rgb(223, 227, 225)');
 				}
+			});
+			
+			// start new game of bingo with 'x' number of bingo cards.
+			$('#lock-cards').click(function(){
+				if (checkcardsforvalues()== false)
+					return false;
+				if(confirm("Are you ready to play bingo?")==false) {
+					return false;
+				}else {
+					$('#new-bingo-card').attr('disabled','disabled');
+					$(this).attr('disabled','disabled');
+					$('button.delete_table').each(function(){
+						$(this).attr('disabled','disabled');
+					});
+					$('button#reset-game').css('display','block');
+				}
+			});
+			
+			$('button#reset-game').click(function(){
+				
+				$.each($('.your-bingo-cards > table tr td input[type="number"]'),function(){
+					$(this).css('background-color','rgb(223, 227, 225)');
+				});
+				
+				$.each($('.tally-card-item'),function(){
+					$(this).css('background-color','rgb(223, 227, 225)');
+				});
+				
+				$('#new-bingo-card').prop('disabled',false);
+				$('#lock-cards').prop('disabled',false);
+				$('#lock-cards').css('display','none');
+				$('button#reset-game').css('display','none');
+				$('button.delete_table').each(function(){
+						$(this).prop('disabled',false);
+					});
+				alert('Game Ended.');
+				
 			});
 		});
 	
@@ -145,6 +186,13 @@
 			width:40px;
 		}	
 		
+		button#lock-cards {
+			display:none;
+		}
+		
+		button#reset-game {
+			display:none;
+		}
 		
 	</style>
   </head>
@@ -155,6 +203,8 @@
 		<div class="btn-group">
         	<button id='new-bingo-card' class='btn btn-secondary'>New Bingo Card</button>
 			<button id='bingo-tally-table' class='btn btn-secondary'>Bingo Tally Table</button>
+			<button id='lock-cards' class='btn btn-secondary'>Start Bingo!</button>
+			<button id='reset-game' class='btn btn-secondary'>End Game</button>
 			<button id='bingo-pattern' class='btn btn-secondary'>Pattern</button>
         </div>
 		<div id="bingo-tally">
